@@ -107,11 +107,16 @@ allprojects {
             correttoCommonFlags += ['--with-jvm-variants=minimal']
         }
 
+        keepSymlinks = Boolean.parseBoolean(project.findProperty("corretto.keepSymlinks"))
+
         // If this is a certified release build, exclude the README.JAVASE file
         excludeReadmeJavaSE = Boolean.parseBoolean(project.findProperty("corretto.excludeReadmeJavaSE"))
-        rootFiles = ['ADDITIONAL_LICENSE_INFO', 'ASSEMBLY_EXCEPTION', 'LICENSE', 'README.md', 'commitId.txt', 'version.txt']
+        rootFiles = ['README.md', 'commitId.txt', 'version.txt']
         if (!excludeReadmeJavaSE) {
             rootFiles += 'README.JAVASE'
+        }
+        if (!keepSymlinks) {
+            rootFiles.addAll(['ADDITIONAL_LICENSE_INFO', 'ASSEMBLY_EXCEPTION', 'LICENSE'])
         }
 
         // If the version opt is empty, then the JDK will set to  'adhoc.<username>.<base dir name>'

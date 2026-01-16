@@ -26,3 +26,5 @@ NashornProfile.txt
 commitId.txt
 /compile_commands.json
 /.cache
+gradle/plugins/**/build
+gradle/plugins/**/.gradle

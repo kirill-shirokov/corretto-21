@@ -19,6 +19,12 @@
  * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+plugins {
+    id 'om.amazon.corretto.gradle.plugins.customtar'
+}
+
+import com.amazon.corretto.gradle.plugins.customtar.TarWithSymlinks;
+
 dependencies {
     compile project(path: ':openjdksrc', configuration: 'archives')
     compile project(path: ':prebuild', configuration: 'cacerts')
@@ -143,12 +149,13 @@ task packageDebugSymbols(type: Tar) {
     }
 }
 
-task packageBuildResults(type: Tar) {
+task packageBuildResults(type: TarWithSymlinks) {
     description 'Compresses the JDK image and puts the results in build/distributions.'
     dependsOn packageDebugSymbols
     dependsOn bundleThirdPartyBinaries
     archiveName "${project.correttoJdkArchiveName}.tar.gz"
     compression Compression.GZIP
+    followSymlinks !project.keepSymlinks
     from(buildRoot) {
         include project.rootFiles
         into project.correttoJdkArchiveName
