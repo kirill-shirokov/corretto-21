@@ -20,10 +20,10 @@
  */
 
 plugins {
-    id 'om.amazon.corretto.gradle.plugins.customtar'
+    id 'com.amazon.corretto.gradle.plugin.customtar'
 }
 
-import com.amazon.corretto.gradle.plugins.customtar.TarWithSymlinks;
+import com.amazon.corretto.gradle.plugin.customtar.TarWithSymlinks;
 
 dependencies {
     compile project(path: ':openjdksrc', configuration: 'archives')

@@ -107,15 +107,15 @@ allprojects {
             correttoCommonFlags += ['--with-jvm-variants=minimal']
         }
 
-        keepSymlinks = Boolean.parseBoolean(project.findProperty("corretto.keepSymlinks"))
-
         // If this is a certified release build, exclude the README.JAVASE file
         excludeReadmeJavaSE = Boolean.parseBoolean(project.findProperty("corretto.excludeReadmeJavaSE"))
         rootFiles = ['README.md', 'commitId.txt', 'version.txt']
         if (!excludeReadmeJavaSE) {
             rootFiles += 'README.JAVASE'
         }
-        if (!keepSymlinks) {
+        // Optionally exclude copies of legal files from root directory for size-optimized builds
+        excludeRootLegalFiles = Boolean.parseBoolean(project.findProperty("corretto.excludeRootLegalFiles"))
+        if (!excludeRootLegalFiles) {
             rootFiles.addAll(['ADDITIONAL_LICENSE_INFO', 'ASSEMBLY_EXCEPTION', 'LICENSE'])
         }
 
@@ -142,6 +142,8 @@ allprojects {
         // If asyncProfilerBinariesPath provided, store for easy reference when bundling
         asyncProfilerBinariesPath = project.findProperty("asyncProfilerBinariesPath") ?: ""
         asyncProfilerLegal = "${rootDir}/installers/legal/async-profiler.md"
+
+        keepSymlinks = Boolean.parseBoolean(project.findProperty("corretto.keepSymlinks"))
 
         // Valid value: null, release, debug, fastdebug, slowdebug
         correttoDebugLevel = "release" // Default: release

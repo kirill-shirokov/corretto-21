@@ -1,4 +1,4 @@
-group = 'com.amazon.corretto.gradle.plugins'
+group = 'com.amazon.corretto.gradle.plugin'
 version = '1.0.0-SNAPSHOT'
 
 apply plugin: 'groovy'
